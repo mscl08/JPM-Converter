@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de PDF para TXT</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; }
+        .box { background: white; padding: 20px; border-radius: 8px; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: auto; }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px; width: 100%; }
+        button:hover { background: #0056b3; }
+        .success { color: green; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Converter PDF em Arquivo de Texto</h2>
+        <p>Clique no botão abaixo para processar o ROTEIRO do seu PDF local e salvar o resultado em TXT.</p>
+        
+        <!-- Formulário para acionar a extração do seu arquivo fixo -->
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Iniciar Extração do PDF</button>
+        </form>
+
+        {% if texto_extraido %}
+            <p class="success">✓ O arquivo TXT foi gerado com sucesso no seu computador!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
