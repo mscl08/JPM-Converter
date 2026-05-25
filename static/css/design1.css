@@ -1,0 +1,93 @@
+/* Configuração global e centralização na tela */
+body { 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    margin: 0; 
+    padding: 20px;
+    background-color: #1D1616; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Caixa principal do conversor */
+.box { 
+    background-color: #FFF0F0; /* Tom bem claro para dar contraste e leitura */
+    padding: 40px 30px; 
+    border-radius: 12px; 
+    max-width: 450px; 
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); 
+    text-align: center;
+}
+
+/* Título e textos internos */
+.box h2 {
+    color: #2D132C;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+.box p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+/* Botão de ação principal */
+button { 
+    background-color: #C72C41; 
+    color: #ffffff; 
+    border: none; 
+    padding: 14px 20px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%; 
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(199, 44, 65, 0.2);
+}
+
+/* Efeito ao passar o mouse no botão */
+button:hover { 
+    background-color: #A62436; /* Tom ligeiramente mais escuro para o efeito */
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Mensagem de sucesso estilizada */
+.success { 
+    color: #155724; 
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 500; 
+    margin-top: 20px; 
+    font-size: 14px;
+}
+
+/* Linha decorativa no topo da página */
+.linha-topo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient( rgba(80, 19, 27, 1) 0%, rgba(29, 22, 22, 1) 100%);
+    z-index: 9999; /* Garante que ela fique por cima de tudo */
+}
+
+h1{
+    color: #6d2c2c; 
+    left: 50px;
+    position: relative;
+
+}
+

@@ -20,6 +20,13 @@ INSTALLED_APPS = [
     # Deixe sem a linha 'hello' para destravar o motor do Django
 ]
 
+# Certifique-se de que essa linha já existe no arquivo
+STATIC_URL = 'static/'
+
+# Adicione este bloco logo abaixo (ele força o Django a buscar na raiz do projeto)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
