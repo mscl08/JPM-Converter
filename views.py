@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from pypdf import PdfReader
-import forms  # <-- MUDANÇA AQUI: Tiramos o ponto antes de forms
+import forms  
+from models import RoteiroExtraido  # <-- ADICIONADO: Importando a tabela do banco
 
 def home(request):
-    form = forms.UploadPDFForm()  # Usando o formulário importado
+    form = forms.UploadPDFForm()  
     texto_completo = ""
 
     if request.method == 'POST':
@@ -17,6 +18,12 @@ def home(request):
                     texto = pagina.extract_text()
                     if texto:
                         texto_completo += texto + "\n"
+                
+                # <-- ADICIONADO: Salva o texto do upload no banco de dados
+                if texto_completo.strip():
+                    RoteiroExtraido.objects.create(conteudo=texto_completo)
+                
+                texto_completo = "Sucesso"
             except Exception as e:
                 texto_completo = f"Erro no upload: {e}"
         else:
@@ -31,8 +38,13 @@ def home(request):
                     if texto:
                         texto_completo += texto + "\n"
                         
+                # <-- ADICIONADO: Salva o texto do PDF fixo local no banco de dados
+                if texto_completo.strip():
+                    RoteiroExtraido.objects.create(conteudo=texto_completo)
+
                 with open(caminho_txt, 'w', encoding='utf-8') as arquivo_txt:
                     arquivo_txt.write(texto_completo)
+                
                 texto_completo = "Sucesso"
             except Exception as e:
                 texto_completo = f"Erro local: {e}"

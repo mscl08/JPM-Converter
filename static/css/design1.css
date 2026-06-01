@@ -1,30 +1,55 @@
-/* Configuração global e centralização na tela */
+/* ==========================================================================
+   1. CONFIGURAÇÃO GLOBAL E LAYOUT
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
 body { 
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
     margin: 0; 
-    padding: 20px;
+    padding: 100px 20px 40px 20px; /* Aumentado padding-top para não cobrir o conteúdo com a barra fixa */
     background-color: #1D1616; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    box-sizing: border-box;
 }
 
-/* Caixa principal do conversor */
-.box { 
-    background-color: #FFF0F0; /* Tom bem claro para dar contraste e leitura */
-    padding: 40px 30px; 
-    border-radius: 12px; 
-    max-width: 450px; 
+/* Barra de navegação fixa no topo */
+.linha-topo {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); 
+    background: linear-gradient(180deg, rgb(61, 3, 17) 0%, rgba(29, 22, 22, 1) 100%);
+    z-index: 9999;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.linha-topo h1 {
+    color: #FFF0F0; 
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   2. CAIXA PRINCIPAL (BOX)
+   ========================================================================== */
+.box { 
+    background-color: #FFF0F0; 
+    padding: 40px 30px; 
+    border-radius: 16px; 
+    max-width: 500px; /* Levemente aumentado para acomodar melhor os cards */
+    width: 100%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); 
     text-align: center;
 }
 
-/* Título e textos internos */
 .box h2 {
-    color: #2D132C;
+    color: #2c0505;
     margin-top: 0;
     margin-bottom: 12px;
     font-size: 24px;
@@ -37,57 +62,105 @@ body {
     margin-bottom: 25px;
 }
 
-/* Botão de ação principal */
+/* ==========================================================================
+   3. BOTÕES E MENSAGENS DE STATUS
+   ========================================================================== */
 button { 
     background-color: #C72C41; 
     color: #ffffff; 
     border: none; 
     padding: 14px 20px; 
-    border-radius: 6px; 
+    border-radius: 8px; 
     cursor: pointer; 
     font-size: 16px;
     font-weight: 600;
     width: 100%; 
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 4px 6px rgba(199, 44, 65, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(199, 44, 65, 0.3);
 }
 
-/* Efeito ao passar o mouse no botão */
 button:hover { 
-    background-color: #A62436; /* Tom ligeiramente mais escuro para o efeito */
-    transform: translateY(-1px);
+    background-color: #A62436; 
+    box-shadow: 0 6px 16px rgba(199, 44, 65, 0.4);
 }
 
 button:active {
-    transform: translateY(1px);
+    transform: scale(0.98);
 }
 
-/* Mensagem de sucesso estilizada */
 .success { 
     color: #155724; 
     background-color: #d4edda;
     border: 1px solid #c3e6cb;
-    padding: 12px;
-    border-radius: 6px;
+    padding: 14px;
+    border-radius: 8px;
     font-weight: 500; 
-    margin-top: 20px; 
+    margin: 20px 0; 
     font-size: 14px;
 }
 
-/* Linha decorativa no topo da página */
-.linha-topo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient( rgba(80, 19, 27, 1) 0%, rgba(29, 22, 22, 1) 100%);
-    z-index: 9999; /* Garante que ela fique por cima de tudo */
+/* ==========================================================================
+   4. SEÇÃO DE FERRAMENTAS (TOOLS ADICIONADAS EM GRID)
+   ========================================================================== */
+.tools {
+    margin-top: 35px;
+    border-top: 2px dashed #E0D0D0; /* Linha sutil separando o conversor das outras opções */
+    padding-top: 30px;
 }
 
-h1{
-    color: #6d2c2c; 
-    left: 50px;
-    position: relative;
-
+.tools__container {
+    display: grid;
+    grid-template-columns: 1fr; /* Lista os itens um abaixo do outro de forma organizada */
+    gap: 15px;
 }
 
+.tools__item {
+    background-color: #FFFFFF;
+    border: 1px solid #EADADA;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tools__item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center; /* Alinha o ícone e os textos lado a lado */
+    padding: 15px;
+    text-align: left;
+}
+
+/* Ícone da ferramenta */
+.tools__item__icon {
+    margin-right: 15px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tools__item__icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+/* Textos internos dos cards */
+.tools__item h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    color: #2D132C;
+}
+
+.tools__item__content p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* Efeito Hover nos Cards de Ferramentas */
+.tools__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-color: #C72C41; /* Borda acende com a cor do botão principal */
+}

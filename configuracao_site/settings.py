@@ -17,8 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Deixe sem a linha 'hello' para destravar o motor do Django
+    'configuracao_site',
 ]
+
 
 # Certifique-se de que essa linha já existe no arquivo
 STATIC_URL = 'static/'
