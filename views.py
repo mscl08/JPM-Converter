@@ -1,15 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from pypdf import PdfReader
-import forms  
-from models import RoteiroExtraido  # <-- ADICIONADO: Importando a tabela do banco
+import forms
+import os  # para manipular nomes de arquivos
 
 def home(request):
-    form = forms.UploadPDFForm()  
+    form = forms.UploadPDFForm()
     texto_completo = ""
 
     if request.method == 'POST':
-        # Tratamento seguro caso você use o formulário web futuramente
         if request.FILES.get('pdf_file'):
             arquivo_pdf = request.FILES['pdf_file']
             try:
@@ -18,36 +17,20 @@ def home(request):
                     texto = pagina.extract_text()
                     if texto:
                         texto_completo += texto + "\n"
-                
-                # <-- ADICIONADO: Salva o texto do upload no banco de dados
-                if texto_completo.strip():
-                    RoteiroExtraido.objects.create(conteudo=texto_completo)
-                
-                texto_completo = "Sucesso"
+
+                # Pega o nome original e troca a extensão para .txt
+                nome_original = os.path.splitext(arquivo_pdf.name)[0]
+                nome_txt = f"{nome_original}.txt"
+
+                # Retorna o arquivo para download com o mesmo nome
+                response = HttpResponse(texto_completo, content_type="text/plain")
+                response["Content-Disposition"] = f'attachment; filename="{nome_txt}"'
+                return response
+
             except Exception as e:
                 texto_completo = f"Erro no upload: {e}"
         else:
-            # Lógica para processar o seu PDF local fixo se clicar no botão
-            caminho_pdf = 'C:/Users/xadre/Downloads/ROTEIRO - ACBV CULT 2024.pdf'
-            caminho_txt = 'C:/Users/xadre/hello/texto_extraido.txt'
-            
-            try:
-                leitor = PdfReader(caminho_pdf)
-                for pagina in leitor.pages:
-                    texto = pagina.extract_text()
-                    if texto:
-                        texto_completo += texto + "\n"
-                        
-                # <-- ADICIONADO: Salva o texto do PDF fixo local no banco de dados
-                if texto_completo.strip():
-                    RoteiroExtraido.objects.create(conteudo=texto_completo)
-
-                with open(caminho_txt, 'w', encoding='utf-8') as arquivo_txt:
-                    arquivo_txt.write(texto_completo)
-                
-                texto_completo = "Sucesso"
-            except Exception as e:
-                texto_completo = f"Erro local: {e}"
+            texto_completo = "Nenhum arquivo enviado."
 
     return render(request, 'upload.html', {
         'form': form,
