@@ -6,8 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configurações de segurança para desenvolvimento
 SECRET_KEY = 'django-insecure-chave-temporaria-para-seu-teste-local'
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = False
+ALLOWED_HOSTS = ['*']  # Altere depois para o link oficial que o Render te der
 
 # Aplicativos integrados e o seu aplicativo 'hello'
 INSTALLED_APPS = [
@@ -20,17 +20,9 @@ INSTALLED_APPS = [
     'configuracao_site',
 ]
 
-
-# Certifique-se de que essa linha já existe no arquivo
-STATIC_URL = 'static/'
-
-# Adicione este bloco logo abaixo (ele força o Django a buscar na raiz do projeto)
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ATENÇÃO: Adicionado para os estilos (CSS) funcionarem em produção
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,7 +37,7 @@ ROOT_URLCONF = 'configuracao_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Tiramos a palavra 'hello' daqui
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,7 +49,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'configuracao_site.wsgi.application'
 
@@ -83,6 +74,18 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Configurações de arquivos estáticos (CSS, JS, Imagens)
+# --- CONFIGURAÇÃO CORRETA DE ARQUIVOS ESTÁTICOS ---
 STATIC_URL = 'static/'
+
+# Pasta de desenvolvimento (onde você coloca seus arquivos CSS locais)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Pasta de produção (onde o Render vai juntar e compactar tudo automaticamente)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Ativa a compressão e cache do WhiteNoise para deixar o site rápido
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
